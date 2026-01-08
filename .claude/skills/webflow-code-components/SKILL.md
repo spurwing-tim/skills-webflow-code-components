@@ -1,23 +1,23 @@
 ---
 name: webflow-code-components
-description: Expert guidance for developing React code components for Webflow. This skill should be used when users are building, troubleshooting, or optimizing React components for import into Webflow Designer, working with Shadow DOM styling, managing component communication, or configuring the Webflow CLI.
+description: Expert guidance for developing React code components for Webflow via DevLink. Use when users are building, troubleshooting, or optimizing React components for import into Webflow Designer, working with Shadow DOM styling, managing component communication, configuring the Webflow CLI, or bundling component libraries.
 ---
 
 # Webflow Code Components Developer
 
-This skill provides expert guidance for building React code components that integrate with Webflow Designer. It covers component architecture, prop configuration, styling within Shadow DOM, state management across isolated components, and CLI workflows.
+This skill provides expert guidance for building React code components that integrate with Webflow Designer via DevLink. It covers component architecture, prop configuration, styling within Shadow DOM, decorators, state management across isolated components, and CLI workflows.
 
 ## When to Use This Skill
 
 Trigger this skill when users are:
 
-- Setting up a new Webflow code component project
+- Setting up a new Webflow code component project with DevLink
 - Creating or declaring React components for Webflow
 - Configuring props with Webflow data types
 - Styling components within Shadow DOM constraints
 - Implementing component communication patterns
 - Fetching external data in components
-- Troubleshooting CLI import issues or component rendering problems
+- Troubleshooting CLI import issues, bundling errors, or component rendering problems
 - Optimizing component performance or bundle size
 - Working with wrapper components for complex prop types
 - Using Webflow hooks like `useWebflowContext`
@@ -34,6 +34,7 @@ Code components run as **isolated React applications** in Shadow DOM:
 - Shadow DOM creates style and DOM boundaries
 - Components cannot share state through React Context
 - SSR is enabled by default but can be disabled
+- React Server Components are not supported
 
 **Key constraint:** React Context, Redux, Zustand, and similar state management libraries do NOT work across separate component instances. Use alternative communication patterns instead.
 
@@ -56,6 +57,8 @@ project/
 
 ### Initial Setup
 
+**Requirements:** Node.js 20+ and npm 10+.
+
 1. **Install dependencies:**
    ```bash
    npm i --save-dev @webflow/webflow-cli @webflow/react @webflow/data-types
@@ -66,7 +69,8 @@ project/
    {
      "library": {
        "name": "Component Library Name",
-       "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"]
+       "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
+       "globals": "./src/globals.ts"
      }
    }
    ```
@@ -97,6 +101,7 @@ export default declareComponent(Component, {
   name: 'Component Name',
   description: 'Brief description',
   group: 'Category',  // Optional: 'Interactive', 'Content', 'Layout', etc.
+  decorators: [],     // Optional: wrap with providers or CSS-in-JS utilities
   
   props: {
     propName: props.Text({
@@ -114,7 +119,7 @@ export default declareComponent(Component, {
 });
 ```
 
-**Critical:** Always import styles in `.webflow.tsx`, not just in `.tsx`.
+**Critical:** Always import styles in `.webflow.tsx`, not just in `.tsx`. For shared styles or CSS-in-JS providers, use a global decorators file and reference it with `library.globals`.
 
 ## Prop Types Reference
 
@@ -132,12 +137,11 @@ Quick reference for available prop types:
 | `props.Variant()` | `string` | Dropdown options |
 | `props.Visibility()` | `boolean` | Show/hide controls |
 | `props.Slot()` | `ReactNode` | Flexible content areas |
-| `props.Color()` | `string` | Color picker ⚠️ **NOT YET AVAILABLE** |
-| `props.ID()` | `string` | HTML element IDs ⚠️ **NOT YET AVAILABLE** |
+| `props.ID()` | `string` | HTML element IDs |
 
 **For detailed configuration options for each prop type, refer to `references/prop-types.md`.**
 
-**Note:** Some prop types are documented but not yet available in the current Webflow release. Do not use prop types marked as "NOT YET AVAILABLE".
+**Note:** For complex prop values (like `props.Link()`), use wrapper components to map the return shape to your component's expected props.
 
 ## Wrapper Components for Link Props
 

@@ -1,6 +1,6 @@
 # Webflow Code Components
 
-A collection of interactive React components designed for import into Webflow Designer. These components feature visual effects like particle systems, animated grids, and interactive UI elements—all running in isolated Shadow DOM environments.
+A collection of interactive React components designed for import into Webflow Designer via DevLink. These components feature visual effects like particle systems, animated grids, and interactive UI elements—all running in isolated Shadow DOM environments.
 
 ## Live Demo
 
@@ -12,9 +12,11 @@ Experience the components in action on our live demo site. Interact with each co
 
 ### Prerequisites
 
-- Node.js (v14 or higher recommended)
+- Node.js 20+ and npm 10+
 - npm or yarn package manager
-- Webflow Freelance or Agency workspace (required for code components)
+- A Webflow account with either:
+  - a Workspace on a Freelancer, Core, Growth, Agency, or Enterprise plan, or
+  - a Webflow site on a CMS, Business, or Enterprise plan
 
 ### Installation
 
@@ -33,7 +35,7 @@ npm install
    - **Recommended**: Use interactive CLI authentication when running `npx webflow library share` (CLI will open your browser)
    - **Alternative**: Create a `.env` file in the project root and add your Webflow API token: `WEBFLOW_WORKSPACE_API_TOKEN=your_token_here`
 
-### Publishing to Webflow
+### Publishing to Webflow (DevLink)
 
 #### Authentication
 
@@ -50,7 +52,7 @@ Publish components to your Webflow workspace:
 npx webflow library share
 ```
 
-Components will appear in your Webflow Designer under "Code Components" in the Add panel.
+Components will appear in your Webflow Designer under "Code Components" in the Components panel after installing the library.
 
 ## Available Components
 
