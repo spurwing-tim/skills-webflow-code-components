@@ -1,6 +1,8 @@
 ---
 name: webflow-code-components
 description: Expert guidance for developing React code components for Webflow via DevLink. Use when users are building, troubleshooting, or optimizing React components for import into Webflow Designer, working with Shadow DOM styling, managing component communication, configuring the Webflow CLI, or bundling component libraries.
+metadata:
+  short-description: Expert guidance for developing React code components for Webflow via DevLink
 ---
 
 # Webflow Code Components Developer
