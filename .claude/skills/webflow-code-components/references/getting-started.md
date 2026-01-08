@@ -1,249 +1,136 @@
 # Getting Started
 
-Learn how to set up your React project for Webflow code components and create your first component.
+Set up your React project for Webflow code components and publish your first component with DevLink.
 
-## Installation
+## Before you start
 
-### 1. Install Required Dependencies
+Make sure you have:
 
-Install the Webflow CLI and necessary packages:
+- Node.js 20+ and npm 10+
+- A Webflow account with either:
+  - a Workspace on a Freelancer, Core, Growth, Agency, or Enterprise plan, or
+  - a Webflow site on a CMS, Business, or Enterprise plan
+- A Webflow site where you can test components
+- Familiarity with React and TypeScript
+
+## 1. Set up your development environment
+
+### Create or open a React project
+
+If you need a new project:
 
 ```bash
-npm i --save-dev @webflow/webflow-cli @webflow/react @webflow/data-types
+npx create-react-app code-components
+cd code-components
 ```
 
-**What you get:**
-- `@webflow/webflow-cli` - CLI for publishing components to Webflow
-- `@webflow/react` - React utilities for code components
-- `@webflow/data-types` - TypeScript definitions for Webflow props
+### Install the Webflow CLI and packages
 
-### 2. Configure webflow.json
+```bash
+npm i --save-dev @webflow/webflow-cli @webflow/data-types @webflow/react
+```
+
+## 2. Configure `webflow.json`
 
 Create a `webflow.json` file in your project root:
 
 ```json
 {
   "library": {
-    "name": "My Component Library",
-    "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
-    "bundleConfig": "./webpack.webflow.js"
+    "name": "<Your Library Name>",
+    "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"]
   }
 }
 ```
 
-| Field | Description | Required |
-|-------|-------------|----------|
-| `library.name` | The name of your component library as it appears in Webflow | Yes |
-| `library.components` | Glob pattern matching your component definition files | Yes |
-| `library.bundleConfig` | Path to custom webpack configuration (optional) | No |
+This file tells DevLink which component definition files to include. For optional settings like `globals` and `bundleConfig`, see the [installation guide](./installation.md).
 
-### 3. Authenticate with Webflow
+## 3. Add a React component
 
-#### Interactive Authentication (Recommended)
-
-The easiest way to authenticate is to let the CLI handle it automatically:
-
-1. **Run the share command:**
-   ```bash
-   npx webflow library share
-   ```
-
-2. **If no token is found**, the CLI will:
-   - Open a browser window
-   - Ask you to authorize the workspace
-   - Save the token to `.env` automatically
-
-**Note:** You must be a Workspace Admin to authorize.
-
-#### Manual Authentication (Alternative)
-
-For CI/CD pipelines or when you need manual control, set up the token yourself:
-
-1. **Get your Workspace API token:**
-   - Open your Webflow workspace
-   - Navigate to **Apps & Integrations** → **Manage**
-   - Scroll to **Workspace API Access**
-   - Click **Generate API Token** and copy it
-
-2. **Add to `.env` file:**
-   ```bash
-   WEBFLOW_WORKSPACE_API_TOKEN=your_token_here
-   ```
-
-   **Security:** Always add `.env` to your `.gitignore` file.
-
-3. **Or pass directly via CLI:**
-   ```bash
-   npx webflow library share --api-token <your-api-token>
-   ```
-
-## Create Your First Component
-
-### 1. Create a React Component
-
-First, create a standard React component:
+Create a simple component, for example:
 
 ```tsx
-// src/components/Button/Button.tsx
-import React from 'react';
-import styles from './Button.module.css';
+// src/Badge.tsx
+import * as React from "react";
 
-export interface ButtonProps {
+interface BadgeProps {
   text: string;
-  variant: 'primary' | 'secondary';
+  variant: "Light" | "Dark";
 }
 
-export const Button: React.FC<ButtonProps> = ({ text, variant }) => {
-  return (
-    <button
-      className={`${styles.button} ${styles[variant]}`}
-      type="button"
-    >
-      {text}
-    </button>
-  );
-};
+export const Badge = ({ text, variant }: BadgeProps) => (
+  <span
+    style={{
+      backgroundColor: variant === "Light" ? "#eee" : "#000",
+      borderRadius: "1em",
+      color: variant === "Light" ? "#000" : "#fff",
+      display: "inline-block",
+      fontSize: "14px",
+      lineHeight: 2,
+      padding: "0 1em",
+    }}
+  >
+    {text}
+  </span>
+);
 ```
 
-### 2. Add Styles
+## 4. Define the Webflow code component
 
-Create a CSS module for your component:
-
-```css
-/* src/components/Button/Button.module.css */
-.button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.primary {
-  background-color: #007bff;
-  color: white;
-}
-
-.primary:hover {
-  background-color: #0056b3;
-}
-
-.secondary {
-  background-color: #6c757d;
-  color: white;
-}
-
-.secondary:hover {
-  background-color: #545b62;
-}
-```
-
-### 3. Create Component Definition
-
-Create a `.webflow.tsx` file to declare your component for Webflow:
+Create a `.webflow.tsx` file to map the React component to Webflow:
 
 ```tsx
-// src/components/Button/Button.webflow.tsx
-import { declareComponent } from '@webflow/react';
-import { props } from '@webflow/data-types';
-import { Button } from './Button';
-import './Button.module.css';
+// src/Badge.webflow.tsx
+import { Badge } from "./Badge";
+import { props } from "@webflow/data-types";
+import { declareComponent } from "@webflow/react";
 
-export default declareComponent(Button, {
-  name: 'Button',
-  description: 'A customizable button component',
-  group: 'Interactive',
-
+export default declareComponent(Badge, {
+  name: "Badge",
+  description: "A badge with variants",
+  group: "Info",
   props: {
     text: props.Text({
-      name: 'Button Text',
-      defaultValue: 'Click me',
+      name: "Text",
+      defaultValue: "Hello World",
     }),
     variant: props.Variant({
-      name: 'Style',
-      options: ['primary', 'secondary'],
-      defaultValue: 'primary',
+      name: "Variant",
+      options: ["Light", "Dark"],
+      defaultValue: "Light",
     }),
   },
 });
 ```
 
-**File Naming:**
-- Pattern: `ComponentName.webflow.tsx`
-- Must match glob pattern in `webflow.json`
-- Keep alongside your React component
+For more configuration details, see [Define a code component](./component-declaration.md).
 
-### 4. Import to Webflow
+## 5. Share your library to Webflow
 
-Run the import command:
+Run the share command:
 
 ```bash
 npx webflow library share
 ```
 
 The CLI will:
-1. Check for authentication (prompt if needed)
-2. Bundle your components
-3. Ask you to confirm the components to share
-4. Upload to your Workspace
 
-### 5. Use in Webflow Designer
+- Authorize your workspace (or use `.env` if already configured)
+- Bundle the library
+- Ask you to confirm the components to share
+- Upload the library to your workspace
 
-1. Open any Webflow project in your workspace
-2. Open the **Add** panel (press `A` or click `+`)
-3. Navigate to **Libraries** → Your library name
-4. Drag your component onto the canvas
-5. Edit props in the right panel
+## 6. Install and use the library in Webflow
 
-## Project Structure
+1. Open a Webflow site in your workspace.
+2. Open the **Libraries** panel (press **L**).
+3. Find your library and click **Install**.
+4. Open the **Components** panel (press **⇧C**).
+5. Drag your component onto the canvas and edit props in the right panel.
 
-Here's a recommended structure for your components:
+## Next steps
 
-```
-my-project/
-├── .env                          # Workspace token (gitignored)
-├── .gitignore
-├── webflow.json                  # Webflow configuration
-├── webpack.webflow.js            # Optional custom webpack config
-├── package.json
-└── src/
-    └── components/
-        ├── Button/
-        │   ├── Button.tsx        # React component
-        │   ├── Button.module.css # Component styles
-        │   └── Button.webflow.tsx # Webflow declaration
-        ├── Card/
-        │   ├── Card.tsx
-        │   ├── Card.module.css
-        │   └── Card.webflow.tsx
-        └── ...
-```
-
-## Next Steps
-
-Now that you have your first component working:
-
-- **[Learn about prop types](./prop-types.md)** - Explore all available prop types
-- **[Understand architecture](./architecture.md)** - Learn about Shadow DOM and SSR
-- **[Style your components](./styling.md)** - Work with CSS in Shadow DOM
-- **[Use Webflow hooks](./hooks.md)** - Access Webflow context in your components
-
-## Common Issues
-
-### Authentication fails
-- Verify your token is correct in `.env`
-- Ensure you're a Workspace Admin
-- Try manual authentication with `--api-token` flag
-
-### Components don't appear
-- Check glob pattern in `webflow.json` matches your files
-- Ensure files have `.webflow.tsx` extension
-- Look for compilation errors in terminal
-
-### Styles not showing
-- Import CSS in `.webflow.tsx` file (not just `.tsx`)
-- Check Shadow DOM styling limitations
-- See [Styling Guide](./styling.md) for details
-
-For more troubleshooting, see the [Troubleshooting Guide](./troubleshooting.md).
+- **[Installation](./installation.md)** - Configure authentication and globals
+- **[Prop Types](./prop-types.md)** - Explore all available prop types
+- **[Bundling and Import](./bundling-and-import.md)** - Advanced bundling options
+- **[Styling Components](./styling.md)** - Shadow DOM styling guidance

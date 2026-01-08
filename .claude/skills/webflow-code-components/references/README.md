@@ -1,26 +1,31 @@
 # Webflow Code Components Documentation
 
-Complete guide to building and importing React components into Webflow.
+Complete guide to building and importing React components into Webflow via DevLink.
 
 ## Table of Contents
 
 ### Getting Started
-- **[Getting Started](./getting-started.md)** - Project setup, installation, and first component
+- **[Getting Started](./getting-started.md)** - Setup, installation, first component
+- **[Installation](./installation.md)** - Configure `webflow.json` and authentication
 
 ### Core Concepts
 - **[Component Declaration](./component-declaration.md)** - Using `declareComponent` to define components
 - **[Prop Types](./prop-types.md)** - All available prop types and their usage
-- **[Wrapper Components](./wrapper-components.md)** - Transforming complex prop values for your React components
-- **[Webflow Hooks](./hooks.md)** - `useWebflowContext` and other Webflow-specific hooks
+- **[Wrapper Components](./wrapper-components.md)** - Transforming complex prop values
+- **[Webflow Hooks](./hooks.md)** - `useWebflowContext` patterns and examples
 
 ### Architecture & Patterns
-- **[Architecture](./architecture.md)** - Shadow DOM, React roots, and SSR
+- **[Architecture](./architecture.md)** - Shadow DOM, React roots, SSR, state isolation
 - **[Component Communication](./component-communication.md)** - Sharing state between isolated components
 - **[Data Fetching](./data-fetching.md)** - Working with external APIs
 - **[Styling Components](./styling.md)** - CSS strategies for Shadow DOM
 
 ### Development & Deployment
+- **[Bundling and Import](./bundling-and-import.md)** - Bundle configuration and share workflows
+- **[Frameworks and Libraries](./frameworks-and-libraries.md)** - Tailwind, CSS-in-JS, UI libraries
+- **[Webpack Configuration Overrides](./webpack-configuration-overrides.md)** - Custom bundler overrides
 - **[Webflow CLI](./cli-reference.md)** - Commands for bundling and importing
+- **[FAQs](./faqs.md)** - Official FAQs and troubleshooting
 - **[Webflow Designer MCP](./webflow-designer-mcp.md)** - Managing Webflow sites with MCP tools (optional)
 - **[Best Practices](./best-practices.md)** - Recommendations and patterns
 - **[Troubleshooting](./troubleshooting.md)** - Common issues and solutions

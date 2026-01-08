@@ -1,6 +1,6 @@
 # Webflow Code Components Developer Skill
 
-Expert guidance for developing React code components that integrate with Webflow Designer.
+Expert guidance for developing React code components that integrate with Webflow Designer via DevLink.
 
 ## About This Skill
 
@@ -11,7 +11,7 @@ This skill transforms Claude into a specialized Webflow code component developme
 - Styling within Shadow DOM constraints
 - Component communication patterns
 - Data fetching and API integration
-- CLI workflows and troubleshooting
+- CLI workflows and troubleshooting (DevLink)
 - Performance optimization and best practices
 
 ## When to Use
@@ -43,7 +43,11 @@ The main skill file providing:
 Comprehensive documentation loaded as needed:
 
 - **getting-started.md** - Setup, installation, first component
+- **installation.md** - `webflow.json` configuration and authentication
 - **component-declaration.md** - Complete `declareComponent` API reference
+- **bundling-and-import.md** - Bundling libraries and share workflows
+- **frameworks-and-libraries.md** - CSS-in-JS and UI library setup
+- **webpack-configuration-overrides.md** - Custom webpack overrides
 - **prop-types.md** - All prop types with full configuration options
 - **wrapper-components.md** - Transform complex prop types
 - **hooks.md** - `useWebflowContext` patterns and examples
@@ -52,6 +56,7 @@ Comprehensive documentation loaded as needed:
 - **component-communication.md** - State sharing patterns
 - **data-fetching.md** - API integration, caching, requests
 - **cli-reference.md** - All CLI commands and options
+- **faqs.md** - FAQs and troubleshooting from official docs
 - **best-practices.md** - Comprehensive recommendations
 - **troubleshooting.md** - Common issues and solutions
 
